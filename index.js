@@ -26,6 +26,46 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 
+// click event
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+// 마우스 클릭 시의 동작 정의
+window.addEventListener("click", (event) => {
+  // Normalize device coordinates (-1 to +1)
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+
+  // calculate objects intersecting the picking ray
+  const intersects = raycaster.intersectObjects(scene.children);
+
+  for (let i = 0; i < intersects.length; i++) {
+    let name = intersects[i].object.name;
+    let target = intersects[i];
+    if (name === "텍스트" || name === "큐브017") {
+      // -2 , 15, 0
+      console.log(target.object.position);
+
+      lightOn(-2.6, 15, 0);
+    }
+    if (name === "텍스트018" || name === "큐브018") {
+      console.log(target.object.position);
+      lightOn(3.8, 15, 0);
+    }
+  }
+});
+
+function lightOn(x, y, z) {
+  const light1 = new THREE.PointLight(0xfefd48, 50);
+  light1.position.set(x, y, z);
+  scene.add(light1);
+  setTimeout(() => {
+    scene.remove(light1);
+  }, 500);
+}
+
 // Geometry, material, mesh
 let loader = new GLTFLoader();
 let filePath = "./3d_model/my_profile_main.glb";
@@ -36,11 +76,7 @@ loader.load(
     gltf.scene.traverse(function (node) {
       if (node instanceof THREE.Mesh) {
         node.castShadow = true; // 이 메시는 그림자를 생성합니다.
-        console.log(node);
-
-        if (node.name === "큐브") {
-          node.receiveShadow = true; // 이 메시는 그림자를 받습니다.
-        }
+        node.receiveShadow = true; // 이 메시는 그림자를 받습니다.
       }
     });
   },
