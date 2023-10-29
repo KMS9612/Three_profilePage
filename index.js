@@ -45,13 +45,9 @@ window.addEventListener("click", (event) => {
     let name = intersects[i].object.name;
     let target = intersects[i];
     if (name === "텍스트" || name === "큐브017") {
-      // -2 , 15, 0
-      console.log(target.object.position);
-
       lightOn(-2.6, 15, 0);
     }
     if (name === "텍스트018" || name === "큐브018") {
-      console.log(target.object.position);
       lightOn(3.8, 15, 0);
     }
   }
@@ -63,7 +59,7 @@ function lightOn(x, y, z) {
   scene.add(light1);
   setTimeout(() => {
     scene.remove(light1);
-  }, 500);
+  }, 1000);
 }
 
 // Geometry, material, mesh
@@ -89,17 +85,20 @@ loader.load(
     console.error("Error loading glTF model:", error);
   }
 );
+// 첫 진입 welcome (추후 로딩으로 변경)
 const fontLoader = new FontLoader();
-
 fontLoader.load(
   "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/fonts/helvetiker_regular.typeface.json",
   function (font) {
-    const shapes = font.generateShapes("Welcome!", 10);
+    const shapes = font.generateShapes("Welcome To My Personal Page", 10);
     const geometry = new THREE.ShapeGeometry(shapes);
-
     const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
     const mesh = new THREE.Mesh(geometry, material);
 
+    mesh.scale.set(0.1, 0.1);
+    mesh.position.set(-10, 50, 0);
+    mesh.rotation.x = THREE.MathUtils.degToRad(45);
+    mesh.rotation.z = THREE.MathUtils.degToRad(-7.2);
     scene.add(mesh);
   }
 );
@@ -128,8 +127,10 @@ const targetPosition = new THREE.Vector3(7, 13.5, 9);
 const targetLookAt = new THREE.Vector3(2, 12, 0);
 // 애니메이션
 function animate() {
-  camera.position.lerp(targetPosition, 0.02);
-  control.target.lerp(targetLookAt, 0.02);
+  setTimeout(() => {
+    camera.position.lerp(targetPosition, 0.02);
+    control.target.lerp(targetLookAt, 0.02);
+  }, 2000);
 
   control.update();
   renderer.render(scene, camera);
