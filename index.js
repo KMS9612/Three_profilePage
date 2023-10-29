@@ -64,7 +64,7 @@ function lightOn(x, y, z) {
 
 // Geometry, material, mesh
 let loader = new GLTFLoader();
-let filePath = "./3d_model/my_profile_main.glb";
+let filePath = "/my_profile_main.glb";
 loader.load(
   filePath,
   (gltf) => {
