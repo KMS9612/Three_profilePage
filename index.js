@@ -46,9 +46,15 @@ window.addEventListener("click", (event) => {
     let target = intersects[i];
     if (name === "텍스트" || name === "큐브017") {
       lightOn(-2.6, 15, 0);
+      window.open(
+        "https://kimdev9612.notion.site/Front-End-ed91ed0ec9e44ac49e8f93ac975bb00f?pvs=4"
+      );
     }
     if (name === "텍스트018" || name === "큐브018") {
       lightOn(3.8, 15, 0);
+      window.open(
+        "https://www.notion.so/kimdev9612/WorkOut-2fba2a6edc954cfe8670454f0f7ffaf6"
+      );
     }
   }
 });
